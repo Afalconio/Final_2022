@@ -29,9 +29,26 @@ $H_0$ : The standard hypothesis states that there are no statistical differences
 
 $H_A$ : The alternate hypothesis states that there is a significant difference in the data, which implies that the vaccine and placebo are NOT equally effective.
 
+##Methods
+
+Upon analyzing the gathered data, we observe that this analysis involves a categorical variable explained by another categorical variable. To facilitate the isolation and testing of each group, distinct data variables will be generated for individual groups. The candP helper file will be employed to utilize R Studio's built-in bar charts for visually representing the data. Subsequently, xtabs will be utilized to compute the pertinent percentages for the dataset. In this instance, as we are exclusively comparing two types of data, there is no need to employ loops for assessing multiple variables in the Fisher test or executing a FisherXY.
+
+# Results
+
 ## Males
 
+### Graphical Results
 
+```{r}
+barchartGC(~infected + treatment,data=male)
+barchartGC(~infected + treatment,data=male, type="percent")
+```
+
+Displayed above is a bar chart illustrating the visual representation of outcomes exclusively for males derived from the data. The comparison focuses on the incidence of contracting Covid-19 based on vaccination status. The left side depicts individuals who contracted Covid-19, while the right side illustrates males who did not.
+
+The visual data clearly indicates that the percentage of individuals in the placebo group who contracted Covid-19 is more than double compared to those who did not contract the virus, and this contrast is noticeably less pronounced among those who remained Covid-free. Considering the sample size, the likelihood of this discrepancy occurring solely by chance is improbable.
+
+### Numerical Results
 
 ## Females
 
