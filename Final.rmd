@@ -133,6 +133,28 @@ Once more, it is evident that the confidence interval surpasses the 50% mark and
 
 ## LGBTQ
 
+### Graphical Results
+
+```{r}
+barchartGC(~infected + treatment,data=lgbtq)
+barchartGC(~infected + treatment,data=lgbtq, type="percent")
+```
+
+Presented above is a bar chart that juxtaposes the visual outcomes exclusively for individuals who are drug users, sourced from the data. This comparison examines the rates of contracting Covid-19 based on vaccination status, with the left side representing individuals who contracted the virus and the right side illustrating those who did not.
+
+Once more, the discernible pattern reveals a significant increase in the number of individuals from the vaccinated group who contracted Covid-19. Conversely, there is a noteworthy proximity among those who remained free of the virus. Considering the sample size, the probability of this occurrence being purely random is unlikely.
+
+### Numerical Results
+
+```{r}
+tableLGBTQ <- xtabs(~infected + treatment, data=lgbtq)
+rowPerc(tableLGBTQ)
+colPerc(tableLGBTQ)
+```
+
+The numerical results reinforce the insights from the visual representation, revealing that the placebo group experienced Covid contraction at a rate of approximately 15%, while the vaccinated group exhibited an 85% incidence of contracting Covid. Contrary to expectations, it becomes evident that the vaccine is ineffective in this testing scenario. In fact, it appears to have an inverse effect, potentially placing this group at a heightened risk of contracting Covid.
+
+### Inferential Results
 
 
 ## Druggies
