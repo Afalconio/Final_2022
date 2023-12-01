@@ -50,8 +50,39 @@ The visual data clearly indicates that the percentage of individuals in the plac
 
 ### Numerical Results
 
-## Females
+```{r}
+tableMale <- xtabs(~infected + treatment, data=male)
+rowPerc(tableMale)
+colPerc(tableMale)
+```
 
+The numerical findings corroborate the insights conveyed by the graphical results. Specifically, the placebo group exhibited a Covid contraction rate of approximately 70%, while the vaccinated group experienced a Covid contraction rate of 30%. These figures underscore the overall effectiveness of the vaccine in this testing scenario.
+
+###Inferential Results
+
+```{r}
+chisq.test(tableMale)
+chisqtestGC(tableMale)
+maleFisher <- fisher.test(tableMale)
+maleFisher
+```
+
+The results of the Chi-Squared test reveal a significantly low P-value for the analyzed data, far below the conventional threshold of 0.05. In fact, it stands at $1.098\times10^{-13}$, an exceedingly small value indicative of a substantial difference in the data. Furthermore, the Chi-Squared statistic registers at 55, considerably surpassing the one degree of freedom associated with this dataset.
+
+Remarkably, the odds of an unvaccinated man contracting Covid-19 are 2.2 times higher than those of a vaccinated man falling to the virus.
+
+### Confidence Interval
+```{r}
+oddsMale = maleFisher$estimate/(maleFisher$estimate+1)*100
+print(oddsMale)
+maleLow=(maleFisher$conf.int[1]/(maleFisher$conf.int[1]+1))*100
+maleHigh=(maleFisher$conf.int[2]/(maleFisher$conf.int[2]+1))*100
+cat("\n","Condifence interval for Males: ",maleLow," to ",maleHigh)
+```
+
+Observing the data, it is evident that the confidence interval exceeds 50%, surpassing the standard vaccine threshold of 60%. This confidence interval is deemed more than sufficient to affirm the effectiveness of the vaccine within this specific group.
+
+## Females
 
 ## LGBTQ
 
