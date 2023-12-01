@@ -84,6 +84,53 @@ Observing the data, it is evident that the confidence interval exceeds 50%, surp
 
 ## Females
 
+## Graphical Results
+
+```{r}
+barchartGC(~infected + treatment,data=female)
+barchartGC(~infected + treatment,data=female, type="percent")
+```
+
+Displayed above is a bar chart presenting the graphical outcomes exclusively for females gathered from the dataset. The comparison focuses on the incidence of contracting Covid-19 based on vaccination status, with the left side representing women who contracted Covid-19 and the right side depicting women who remained free of the virus.
+
+It is evident that approximately one-third more of the percentage of individuals in the placebo group contracted Covid-19, while those who did not contract the virus exhibit closely aligned proportions.
+
+## Numerical Results
+
+```{r}
+tableFemale <- xtabs(~infected + treatment, data=female)
+rowPerc(tableFemale)
+colPerc(tableFemale)
+```
+
+The findings align with the insights derived from the graphical representation of the data. The placebo group exhibited a Covid contraction rate of around 60%, while the vaccinated group demonstrated a 40% incidence. It is evident that the vaccine generally proves effective in this testing scenario, although its efficacy appears to be lower than observed among male participants.
+
+## Inferential Results
+
+```{r}
+chisq.test(tableFemale)
+chisqtestGC(tableFemale)
+femaleFisher <- fisher.test(tableFemale)
+femaleFisher
+```
+
+
+The results of the Chi-Squared test indicate a P value for the tested data that is below the commonly accepted threshold of 0.05. In fact, it is $2.732\times10^{-4}$, signifying a significantly small value and suggesting a notable difference in the data. The Chi-Squared statistic, measuring 13, exceeds the degrees of freedom (one) derived from this dataset.
+
+Furthermore, the analysis reveals that the odds of an unvaccinated woman contracting Covid-19 are 1.5 times higher than those of a woman with the vaccine.
+
+### Confidence Interval
+
+```{r}
+oddsFemale = femaleFisher$estimate/(femaleFisher$estimate +1)*100
+print(oddsFemale)
+femaleLow=(femaleFisher$conf.int[1]/(femaleFisher$conf.int[1]+1))*100
+femaleHigh=(femaleFisher$conf.int[2]/(femaleFisher$conf.int[2]+1))*100
+cat("\n","Condifence interval for Females: ",femaleLow," to ",femaleHigh)
+```
+
+Once more, it is evident that the confidence interval surpasses the 50% mark and encompasses the 60% threshold. While its efficacy is lower compared to the male group, the vaccine remains effective in this context.
+
 ## LGBTQ
 
 
