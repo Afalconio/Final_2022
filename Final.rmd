@@ -156,6 +156,26 @@ The numerical results reinforce the insights from the visual representation, rev
 
 ### Inferential Results
 
+```{r}
+chisq.test(tableLGBTQ)
+chisqtestGC(tableLGBTQ)
+lgbtqFisher <- fisher.test(tableLGBTQ)
+lgbtqFisher
+```
+
+The Chi-Squared test reveals a significantly low P value for the examined data, well below the threshold of 0.05; in fact, it stands at $6.668\times10^{-8}$. This minute value suggests a notable difference in the data. The Chi-Squared statistic, registering at 29, surpasses our degrees of freedom, which is one for this dataset. In this group, the likelihood of a vaccinated individual contracting Covid-19 is approximately 1 in 5, highlighting a noteworthy risk.
+
+### Confidence Interval
+
+```{r}
+oddsLGBTQ = lgbtqFisher$estimate/(lgbtqFisher$estimate +1)*100
+print(oddsLGBTQ)
+lgbtqLow=(lgbtqFisher$conf.int[1]/(lgbtqFisher$conf.int[1]+1))*100
+lgbtqHigh=(lgbtqFisher$conf.int[2]/(lgbtqFisher$conf.int[2]+1))*100
+cat("\n","Condifence interval for LGBTQ: ",lgbtqLow," to ",lgbtqHigh)
+```
+
+Observing the confidence interval ranging from 7% to 26%, it is evident that this falls significantly below the 50% threshold. Consequently, we can conclude that this vaccine may not be deemed highly effective.
 
 ## Druggies
 
