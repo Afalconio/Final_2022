@@ -192,6 +192,64 @@ barchartGC(~infected + treatment,data=drugUser)
 barchartGC(~infected + treatment,data=drugUser, type="percent")
 ```
 
-Displayed above is a bar chart presenting the graphical outcomes exclusively for drug users gathered from the dataset. The comparison focuses on the incidence of contracting Covid-19 based on vaccination status, with the left side representing women who contracted Covid-19 and the right side depicting women who remained free of the virus.
+Displayed above is a bar chart presenting the graphical outcomes exclusively for drug users gathered from the dataset. The comparison focuses on the incidence of contracting Covid-19 based on vaccination status, with the left side representing drug users who contracted Covid-19 and the right side depicting drug uers who remained free of the virus.
+
+From analyzing the graph as a representative of the data, we can see that there is a stark contrast between the placebo users and vaccine group with those who contracted Covid 19 with more people vaccinated contracting the virus, but there is almost no gap between the placebo users and vaccine users in the group that did not contract the virus.
+
+### Numerical Results
+
+```{r}
+tableDrug <- xtabs(~infected + treatment, data=drugUser)
+rowPerc(tableDrug)
+colPerc(tableDrug)
+```
+
+The numerical findings reinforce the insights gleaned from the graphical results, revealing that the placebo group experienced Covid contraction roughly 10% of the time, whereas the vaccinated group exhibited a 90% Covid contraction rate. This observation suggests that, contrary to expectations, the vaccine is not effective in this testing scenario. In fact, it appears to have an inverse effectiveness, potentially elevating the risk of Covid contraction within this group. Furthermore, the adverse effects within this cohort surpass even those observed in the already negatively affected LGBTQ group.
+
+### Inferential Results
+
+```{r}
+chisq.test(tableDrug)
+chisqtestGC(tableDrug)
+drugFisher <- fisher.test(tableDrug)
+drugFisher
+```
+
+The Chi-Squared test analysis reveals that the P-value for the examined data significantly surpasses the conventional significance threshold of 0.05. In fact, it is $2.842\times10^{-9}$, signifying a notably minute value and indicating a substantial difference in the data. The Chi-Squared statistic registers at 35, exceeding the degrees of freedom by one in this dataset. Consequently, the odds of a non-vaccinated individual contracting Covid-19 within this group are approximately 1 in 8.
+
+### Confidence Interval
+
+```{r}
+oddsDrug = drugFisher$estimate/(drugFisher$estimate +1)*100
+print(oddsDrug)
+drugLow=(drugFisher$conf.int[1]/(drugFisher$conf.int[1]+1))*100
+drugHigh=(drugFisher$conf.int[2]/(drugFisher$conf.int[2]+1))*100
+cat("\n","Condifence interval for Drug Users: ",drugLow," to ",drugHigh)
+```
+
+Observing the confidence interval ranging from 4% to 21%, which is significantly below 50%, we can conclude that this vaccine does not perform well.
 
 # Overall Results and Conclusions
+
+Across all categories, the rejection of the Null Hypothesis is evident, albeit for distinct reasons. Certain groups showcase positive outcomes, indicating the vaccine's efficacy in reducing the risk of contracting Covid. However, in contrast, other groups seem to experience an elevated risk following vaccination.
+
+The precise cause of this variance remains unclear from the available data. However, it seems that heterosexual men and women derive benefits from the vaccine, placing them in a lower-risk category. Conversely, individuals within the LGBTQ community and those with a history of drug use exhibit notably adverse results associated with the vaccine.
+
+To follow up, the four categories need further explanation in their own sections. 
+
+## Males
+
+The data reveals that the male cohort experienced the most favorable outcomes attributable to the vaccine. Both percentage charts and bar charts distinctly demonstrate that the likelihood of a man contracting Covid-19 is significantly reduced with vaccination. Moreover, the statistical analysis underscores the significance of this difference, as reflected in our small P-Values and elevated Chi-Squared statistics. Within this category, we can confidently reject the Null Hypothesis in favor of the alternative, concluding that the vaccine is indeed effective in this particular group.
+
+## Females
+
+The data reveals a positive impact of the vaccine within the female cohort. Both percentage charts and bar charts demonstrate that women are less likely to contract Covid-19 when vaccinated. Notably, the statistical significance of this difference is evident in our small p-values and elevated Chi-Squared statistics. In this specific category, we can confidently reject the Null Hypothesis in favor of the alternative, concluding that the vaccine is effective in this group, albeit to a lesser extent than in the male group.
+
+## LGBTQ
+
+ChatGPT
+The data reveals a concerning trend within the LGBTQ community regarding vaccine efficacy. Both percentage and bar charts illustrate a higher likelihood of contracting Covid-19 among LGBTQ individuals who receive the vaccine. Significantly low p-values and elevated Chi-Squared statistics further underscore the substantial difference. In light of this evidence, we reject the Null Hypothesis in favor of the alternative, concluding that the vaccine is ineffective in preventing Covid-19 within this specific demographic. Paradoxically, it appears that the vaccine may even heighten the risk for individuals in this group.
+
+## Drug Users
+
+The data reveals that individuals in the Drug User group experienced unfavorable outcomes from the vaccine. Both percentage charts and bar charts demonstrate a higher likelihood of Covid-19 contraction among drug users who received the vaccine. Furthermore, the statistically significant variance is evident through our small P-values and elevated Chi-Squared statistics. In this specific category, we can confidently reject the Null Hypothesis in favor of the alternative, concluding that the vaccine lacks efficacy within this group and appears to elevate their risk.
