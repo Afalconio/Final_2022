@@ -18,6 +18,12 @@ FinalDat <-read.csv(file="final.csv",header=TRUE)
 FinalData <- FinalDat  %>% select(-one_of("X"))
 FinalData <- FinalData %>%
 mutate(across(where(is.character), as.factor))
+
+male = filter(FinalData, sex =="M")
+female = filter(FinalData, sex =="F")
+lgbtq = filter(FinalData, LGBTQ =="gay")
+drugUser = filter(FinalData, DrugUser =="yes")
+
 ```
 
 # Introduction
@@ -177,7 +183,15 @@ cat("\n","Condifence interval for LGBTQ: ",lgbtqLow," to ",lgbtqHigh)
 
 Observing the confidence interval ranging from 7% to 26%, it is evident that this falls significantly below the 50% threshold. Consequently, we can conclude that this vaccine may not be deemed highly effective.
 
-## Druggies
+## Drug Users
 
+### Graphical Results
+
+```{r}
+barchartGC(~infected + treatment,data=drugUser)
+barchartGC(~infected + treatment,data=drugUser, type="percent")
+```
+
+Displayed above is a bar chart presenting the graphical outcomes exclusively for drug users gathered from the dataset. The comparison focuses on the incidence of contracting Covid-19 based on vaccination status, with the left side representing women who contracted Covid-19 and the right side depicting women who remained free of the virus.
 
 # Overall Results and Conclusions
